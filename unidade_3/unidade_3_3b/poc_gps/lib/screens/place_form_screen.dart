@@ -12,7 +12,7 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Novo Lugar'),
+        title: Text('Unidade 3 - 3B GPS'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

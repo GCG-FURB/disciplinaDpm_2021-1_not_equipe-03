@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Great Places',
+      title: 'Unidade 3 - 3B GPS',
       theme: ThemeData(
         primarySwatch: Colors.indigo,
         accentColor: Colors.amber,
