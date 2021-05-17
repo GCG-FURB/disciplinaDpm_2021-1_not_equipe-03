@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_cube/flutter_cube.dart';
 import 'package:sensors/sensors.dart';
 
 void main() {
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.indigo,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Objeto 3D'),
+      home: MyHomePage(title: 'Objeto 2D'),
     );
   }
 }
