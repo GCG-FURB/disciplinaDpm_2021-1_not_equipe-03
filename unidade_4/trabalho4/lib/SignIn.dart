@@ -116,11 +116,11 @@ class SignInPage extends StatelessWidget {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (_) => SignUpPage()));
                       },
-                      child: const Text('Novo usuário? Inscreva-se',
+                      child: const Text('Novo usuário? Cadastre-se',
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                              color: Colors.white,
                               decoration: TextDecoration.underline))),
                 ),
               ],
