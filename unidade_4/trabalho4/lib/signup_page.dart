@@ -1,12 +1,12 @@
-import 'package:app_estacionamento/app/models/tipopessoa_model.dart';
-import 'package:app_estacionamento/app/providers/UserProvider.dart';
+import 'package:date_field/date_field.dart';
 import 'package:provider/provider.dart';
-import 'package:app_estacionamento/app/helpers/validators.dart';
-import 'package:app_estacionamento/app/models/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:trab_4_mobile/user_model.dart';
+
+import 'UserProvider.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key key}) : super(key: key);
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
   _SignUpPageState createState() => _SignUpPageState();
@@ -15,8 +15,6 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final UserModel _user = UserModel();
-  List<TipoPessoa> tipoPessoa = TipoPessoa.values;
-  var selectedPessoa;
   bool isManager = false;
 
   @override
@@ -33,7 +31,7 @@ class _SignUpPageState extends State<SignUpPage> {
               children: <Widget>[
                 Center(
                   child: const Text(
-                    'iPark',
+                    'Save The Date',
                     style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -44,14 +42,14 @@ class _SignUpPageState extends State<SignUpPage> {
                   decoration: const InputDecoration(
                       labelText: 'Nome Completo', icon: Icon(Icons.person)),
                   validator: (name) {
-                    if (name.isEmpty) {
+                    if (name!.isEmpty) {
                       return 'Campo obrigatório';
                     } else if (name.trim().split(' ').length <= 1) {
                       return 'Preencha com seu nome completo';
                     }
                     return null;
                   },
-                  onSaved: (name) => _user.name = name,
+                  onSaved: (name) => _user.name = name!,
                 ),
                 const SizedBox(
                   height: 16,
@@ -61,56 +59,47 @@ class _SignUpPageState extends State<SignUpPage> {
                       labelText: 'E-mail', icon: Icon(Icons.mail)),
                   keyboardType: TextInputType.emailAddress,
                   validator: (email) {
-                    if (email.isEmpty) {
+                    if (email!.isEmpty) {
                       return 'Campo obrigatório';
-                    } else if (!emailValid(email)) {
-                      return 'E-mail inválido';
                     }
                     return null;
                   },
-                  onSaved: (email) => _user.email = email,
+                  onSaved: (email) => _user.email = email!,
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Icon(Icons.person),
-                      DropdownButton(
-                        items: tipoPessoa
-                            .map((value) => DropdownMenuItem(
-                                  child: Text(value.descricao),
-                                  value: value.descricao,
-                                ))
-                            .toList(),
-                        onChanged: (selectedPessoas) {
-                          if (this.mounted) {
-                            setState(() {
-                              selectedPessoa = selectedPessoas;
-                            });
-                          }
-                        },
-                        hint: Text("Selecione o tipo de pessoa"),
-                        value: selectedPessoa,
-                      )
-                    ]),
+                DateTimeFormField(
+                  decoration: const InputDecoration(
+                      labelText: 'Dia de nascimento', icon: Icon(Icons.cake)),
+                  mode: DateTimeFieldPickerMode.date,
+                  validator: (birthday) {
+                    if (birthday == null) {
+                      return 'Campo obrigatória!';
+                    }
+
+                    if (!birthday.isBefore(DateTime.now().add(new Duration(days: 18 * 365 )))) {
+                      return 'Você deve ser maior de 18!';
+                    }
+
+                    return null;
+                  },
+                  onSaved: (birthday) => _user.birthday = birthday!,
+                ),
                 const SizedBox(
-                  height: 6,
+                  height: 16,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
                       labelText: 'Senha', icon: Icon(Icons.lock)),
                   obscureText: true,
                   validator: (pass) {
-                    if (pass.isEmpty) {
+                    if (pass!.isEmpty) {
                       return 'Campo obrigatório';
-                    } else if (pass.length < 6) {
-                      return 'Senha muito curta';
                     }
                     return null;
                   },
-                  onSaved: (pass) => _user.password = pass,
+                  onSaved: (pass) => _user.password = pass!,
                 ),
                 const SizedBox(
                   height: 8,
@@ -120,14 +109,12 @@ class _SignUpPageState extends State<SignUpPage> {
                       labelText: 'Repita a Senha', icon: Icon(Icons.lock)),
                   obscureText: true,
                   validator: (pass) {
-                    if (pass.isEmpty) {
+                    if (pass!.isEmpty) {
                       return 'Campo obrigatório';
-                    } else if (pass.length < 6) {
-                      return 'Senha muito curta';
                     }
                     return null;
                   },
-                  onSaved: (pass) => _user.confirmPassword = pass,
+                  onSaved: (pass) => _user.confirmPassword = pass!,
                 ),
                 const SizedBox(
                   height: 20,
@@ -143,18 +130,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         borderRadius: BorderRadius.circular(15),
                         side: BorderSide(color: Colors.red)),
                     onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                        _user.kind = selectedPessoa;
-
-                        if (_user.kind == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: const Text('Tipo pessoa vazio!'),
-                            backgroundColor: Colors.red,
-                          ));
-                          return;
-                        }
-
-                        _formKey.currentState.save();
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
 
                         if (_user.password != _user.confirmPassword) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -163,10 +140,9 @@ class _SignUpPageState extends State<SignUpPage> {
                           ));
                           return;
                         }
-
                         context.read<UserProvider>().createNewUser(
-                            user: _user,
-                            onFail: (e) {
+                            _user,
+                            (e) {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
                                 content:
@@ -174,7 +150,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 backgroundColor: Colors.red,
                               ));
                             },
-                            onSucess: () {
+                            () {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
                                 content: Text('Usuário criado com sucesso!'),

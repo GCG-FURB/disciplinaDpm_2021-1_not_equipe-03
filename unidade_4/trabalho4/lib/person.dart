@@ -1,8 +1,9 @@
 class Person {
-  final String? nome;
-  final int? idade;
-  final String? bio; // colocar no banco maximo de 40 caracteres
-  final String? contato; // colocar no banco maximo 20 caracteres
+  final String nome;
+  final int idade;
+  final String bio;
+  final String contato;
+  final String image;
 
-  Person(this.nome, this.idade, this.bio, this.contato);
+  Person(this.nome, this.idade, this.bio, this.contato, this.image);
 }

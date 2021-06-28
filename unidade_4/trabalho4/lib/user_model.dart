@@ -1,29 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
-  UserModel({this.email, this.password, this.name, this.cpf, this.kind});
+  UserModel({this.email = "", this.password = "", this.name = ""});
 
   UserModel.fromDocument(DocumentSnapshot document) {
-    this.id = document['id'] as String;
+    this.id = document.id;
     this.name = document['name'] as String;
     this.email = document['email'] as String;
+    this.bio = document['bio'] as String;
+    this.contact = document['contact'] as String;
 
     // print(document.data().keys);
     this.profileID = document['profileID'] as String;
-    print(name);
 
-    if (document.get('img') != null) {
-      this.img = document['img'];
+    if (document.get('image') != null) {
+      this.img = document['image'];
     }
 
-    if (document.get('cpf') != null) {
-      this.cpf = document['cpf'] as String;
-    }
-
-    /*this.kind = false;
-    if (document.get('kind') != null) {
-      //this.kind = document['kind'] as bool;
-    }*/
+    age = DateTime.now().year - (document['birthday'] as Timestamp).toDate().year;
   }
 
   String id = '';
@@ -31,17 +25,20 @@ class UserModel {
   String name = '';
   String email = '';
   String password = '';
+  String bio = '';
   String confirmPassword = '';
-  String cpf = '';
   String img = '';
-  bool kind;
+  String contact = '';
+  DateTime birthday = new DateTime(1, 1, 1);
+  int age = 0;
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'email': email,
-        'password': password,
-        'cpf': cpf,
-        'kind': kind,
-      };
+    'profileID': profileID,
+    'name': name,
+    'email': email,
+    'bio': bio,
+    'contact': contact,
+    'birthday': birthday,
+    'image': img,
+  };
 }

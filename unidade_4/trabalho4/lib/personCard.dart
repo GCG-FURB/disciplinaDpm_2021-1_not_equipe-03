@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:trab_4_mobile/person.dart';
+import 'package:trab_4_mobile/user_model.dart';
 
-class personCard extends StatefulWidget {
-  final Person person;
-
+class personCard extends StatelessWidget {
+  final UserModel person;
   const personCard(this.person);
 
-  @override
-  _personCardState createState() => _personCardState();
-}
-
-class _personCardState extends State<personCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -44,8 +39,8 @@ class _personCardState extends State<personCard> {
               SizedBox(
                 height: 10.0,
               ),
-              _buildHeaderInfo(widget.person.nome!),
-              _buildHeaderInfo("${widget.person.idade!} anos"),
+              _buildHeaderInfo(person.name),
+              _buildHeaderInfo("${person.age} anos"),
             ],
           ),
         ),
@@ -54,9 +49,11 @@ class _personCardState extends State<personCard> {
   }
 
   Widget _buildCircleAvatar() {
+    var image = person.img.isEmpty ? "https://www.allianceplast.com/wp-content/uploads/2017/11/no-image.png" : person.img;
+
     return CircleAvatar(
       backgroundImage: NetworkImage(
-        "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg.jpg",
+        image,
       ),
       radius: 50.0,
     );
@@ -97,7 +94,7 @@ class _personCardState extends State<personCard> {
           SizedBox(
             height: 10.0,
           ),
-          _buildBodyInfo(widget.person.bio!),
+          _buildBodyInfo(person.bio),
           SizedBox(
             height: 20.0,
           ),
@@ -108,7 +105,7 @@ class _personCardState extends State<personCard> {
           SizedBox(
             height: 10.0,
           ),
-          _buildBodyInfo(widget.person.contato!),
+          _buildBodyInfo(person.contact),
         ],
       ),
     );

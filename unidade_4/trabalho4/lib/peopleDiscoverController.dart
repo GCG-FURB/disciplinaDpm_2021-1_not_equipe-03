@@ -2,7 +2,7 @@ import 'package:trab_4_mobile/peopleDiscoverRepository.dart';
 import 'package:trab_4_mobile/person.dart';
 
 class PeopleDiscoverController {
-  List<Person>? people = List.empty(growable: true);
+  List<Person> people = List.empty(growable: true);
 
   late PeopleDiscoverRepository _repository;
 
@@ -10,7 +10,7 @@ class PeopleDiscoverController {
     _repository = PeopleDiscoverRepository();
   }
 
-  void getPeopleFromDatabase() {
-    this.people = _repository.getPeople();
+  Future<void> getPeopleFromDatabase() async {
+
   }
 }

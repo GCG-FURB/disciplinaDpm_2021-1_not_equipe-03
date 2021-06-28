@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "760259741337",
-    "project_id": "ipark-34e8c",
-    "storage_bucket": "ipark-34e8c.appspot.com"
+    "project_number": "291772911745",
+    "project_id": "trabalho-mobile-9431a",
+    "storage_bucket": "trabalho-mobile-9431a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:760259741337:android:422d8d29a2debd823eda08",
+        "mobilesdk_app_id": "1:291772911745:android:33277c6f0ff2a52012fd80",
         "android_client_info": {
-          "package_name": "br.com.furb.app_estacionamento"
+          "package_name": "br.com.furb.trabalho_mobile"
         }
       },
       "oauth_client": [
         {
-          "client_id": "760259741337-ckjo6b0g9otpgh5s3ac1dle296kpeh2o.apps.googleusercontent.com",
+          "client_id": "291772911745-tkaj4r7ndpmk3k98hfedqqvu8jthjlf0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyChtmdYwKQT5be6DtGv-rBw4Sb1CBch-Ag"
+          "current_key": "AIzaSyCsN-d1QQLGrjJCR4qVaVvlbnnV0q6f6YE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "760259741337-ckjo6b0g9otpgh5s3ac1dle296kpeh2o.apps.googleusercontent.com",
+              "client_id": "291772911745-tkaj4r7ndpmk3k98hfedqqvu8jthjlf0.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
