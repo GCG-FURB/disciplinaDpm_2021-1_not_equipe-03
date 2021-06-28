@@ -12,7 +12,6 @@ class profilePage extends StatefulWidget {
 
   @override
   _profilePageState createState() => _profilePageState();
-
 }
 
 class _profilePageState extends State<profilePage> {
@@ -49,7 +48,8 @@ class _profilePageState extends State<profilePage> {
 
     var storageRef = FirebaseStorage.instance.ref();
     var imageRef = storageRef.child("images/${user.id}/image.jpg");
-    var upload = imageRef.putFile(_image);
+    var file = File(_image.path);
+    var upload = imageRef.putFile(file);
     var path = "";
 
     // ignore: unnecessary_statements
@@ -83,16 +83,14 @@ class _profilePageState extends State<profilePage> {
   }
 
   Widget buildForm() {
-    user = context
-        .read<UserProvider>()
-        .currentUser;
+    user = context.read<UserProvider>().currentUser;
 
     return SingleChildScrollView(
       child: Form(
           key: _formKey,
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-                vertical: 30.0, horizontal: 16.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 30.0, horizontal: 16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -110,10 +108,10 @@ class _profilePageState extends State<profilePage> {
                           padding: const EdgeInsets.all(4.0),
                           child: Container(
                               child: RaisedButton(
-                                color: Colors.blueGrey,
-                                child: Text("Câmera"),
-                                onPressed: useCamera,
-                              )),
+                            color: Colors.blueGrey,
+                            child: Text("Câmera"),
+                            onPressed: useCamera,
+                          )),
                         )),
                     Expanded(
                         flex: 1,
@@ -121,12 +119,12 @@ class _profilePageState extends State<profilePage> {
                           padding: const EdgeInsets.all(2.0),
                           child: Container(
                               child: RaisedButton(
-                                color: Colors.blueGrey,
-                                onPressed: () async {
-                                  await getImage();
-                                },
-                                child: Text("Galeria"),
-                              )),
+                            color: Colors.blueGrey,
+                            onPressed: () async {
+                              await getImage();
+                            },
+                            child: Text("Galeria"),
+                          )),
                         ))
                   ],
                 ),
@@ -144,7 +142,7 @@ class _profilePageState extends State<profilePage> {
                     hintText: 'Insira seu nome aqui',
                     labelText: 'Nome',
                     labelStyle:
-                    TextStyle(color: Colors.tealAccent, fontSize: 20.0),
+                        TextStyle(color: Colors.tealAccent, fontSize: 20.0),
                   ),
                   initialValue: user.name,
                   onSaved: (name) => user.name = name!,
@@ -210,13 +208,13 @@ class _profilePageState extends State<profilePage> {
       backgroundImage: NetworkImage(image),
       radius: 68.0,
       child: ClipOval(
-        child: Image.file(_image,
+        child: Image.file(
+          _image,
           fit: BoxFit.cover,
-          width:140.0,
+          width: 140.0,
           height: 140.0,
         ),
       ),
     );
   }
 }
-

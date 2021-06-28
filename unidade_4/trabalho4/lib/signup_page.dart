@@ -71,17 +71,15 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 DateTimeFormField(
                   decoration: const InputDecoration(
-                      labelText: 'Dia de nascimento', icon: Icon(Icons.cake)),
+                      labelText: 'Data de nascimento', icon: Icon(Icons.cake)),
                   mode: DateTimeFieldPickerMode.date,
                   validator: (birthday) {
                     if (birthday == null) {
                       return 'Campo obrigatória!';
                     }
-
                     if (!birthday.isBefore(DateTime.now().add(new Duration(days: 18 * 365 )))) {
                       return 'Você deve ser maior de 18!';
                     }
-
                     return null;
                   },
                   onSaved: (birthday) => _user.birthday = birthday!,
