@@ -1,27 +1,35 @@
-name: trab_4_mobile
-description: A new Flutter project.
+ name: trab_4_mobile
+ description: A new Flutter project.
 
-publish_to: 'none'
-version: 1.0.0+1
+ publish_to: 'none'
+ version: 1.0.0+1
 
-environment:
+ environment:
   sdk: ">=2.12.0 <3.0.0"
 
-dependencies:
+ dependencies:
+
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.1
+
   swipe_cards: ^0.1.0
   location: ^4.1.1
   google_maps_flutter: ^2.0.3
   flutter_google_places: 0.2.3
+  image_picker: ^0.7.0-nullsafety
 
-  flutter:
-    sdk: flutter
-
-dev_dependencies:
+ dev_dependencies:
   flutter_test:
     sdk: flutter
+  integration_test:
+    sdk: flutter
 
-flutter:
+ flutter:
   uses-material-design: true
 
-assets:
-  - images/
+ assets:
+
+
+
+
