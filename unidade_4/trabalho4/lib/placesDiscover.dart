@@ -1,32 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class placesDiscover extends StatefulWidget {
-  const placesDiscover();
+  placesDiscover();
 
   @override
   _placesDiscoverState createState() => _placesDiscoverState();
 }
 
 class _placesDiscoverState extends State<placesDiscover> {
+  var latitude;
+  var longitude;
+
+  Future<void> _getCurrentLocation() async {
+    final locData =  await Location().getLocation();
+
+    setState(() {
+      latitude = locData.latitude;
+      longitude = locData.longitude;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _getCurrentLocation();
     return Scaffold(
       appBar: AppBar(
         title: Text("Descobrir Lugares"),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
         children: <Widget>[
-          Text(
-            "Descobrir Lugares",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 30.0,
-                fontFamily: "Times New Roman",
-                fontWeight: FontWeight.w600),
-          ),
-        ],
-      ),
+          GoogleMap(
+            mapType: MapType.normal,
+            myLocationEnabled: true,
+            myLocationButtonEnabled: true,
+
+            initialCameraPosition: CameraPosition(
+              target: LatLng(
+                latitude,
+                longitude
+              ),
+              zoom: 13
+            ),
+          )
+        ])
     );
   }
 }
