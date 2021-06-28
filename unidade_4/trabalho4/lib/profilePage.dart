@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -42,6 +43,22 @@ class _profilePageState extends State<profilePage> {
     });
   }
 
+  Future<void> getImageUrl(UserModel user) async {
+    var counter = 1;
+    List<String> paths = <String>[];
+
+    var storageRef = FirebaseStorage.instance.ref();
+    var imageRef = storageRef.child("images/${user.id}/image.jpg");
+    var upload = imageRef.putFile(_image);
+    var path = "";
+
+    // ignore: unnecessary_statements
+    await upload.then((snapshot) =>
+        snapshot.ref.getDownloadURL().then((value) => path = value));
+
+    user.img = path;
+  }
+
   final _formKey = GlobalKey<FormState>();
   UserModel user = new UserModel();
 
@@ -56,8 +73,9 @@ class _profilePageState extends State<profilePage> {
         backgroundColor: Colors.tealAccent,
         onPressed: () {
           _formKey.currentState!.save();
+          getImageUrl(user);
           var provider = context.read<UserProvider>();
-          provider.updateUserinfo(provider.currentUser);
+          provider.updateUserinfo(user);
         },
         child: Text('OK'),
       ),
@@ -79,7 +97,39 @@ class _profilePageState extends State<profilePage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                buildCircleAvatar(user.img),
+                CircleAvatar(
+                  backgroundColor: Colors.tealAccent,
+                  radius: 70.0,
+                  child: buildCircleAvatar(user.img),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Container(
+                              child: RaisedButton(
+                                color: Colors.blueGrey,
+                                child: Text("Câmera"),
+                                onPressed: useCamera,
+                              )),
+                        )),
+                    Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: Container(
+                              child: RaisedButton(
+                                color: Colors.blueGrey,
+                                onPressed: () async {
+                                  await getImage();
+                                },
+                                child: Text("Galeria"),
+                              )),
+                        ))
+                  ],
+                ),
                 SizedBox(
                   height: 10.0,
                 ),
@@ -157,10 +207,15 @@ class _profilePageState extends State<profilePage> {
         : img;
 
     return CircleAvatar(
-      backgroundImage: NetworkImage(
-        image,
+      backgroundImage: NetworkImage(image),
+      radius: 68.0,
+      child: ClipOval(
+        child: Image.file(_image,
+          fit: BoxFit.cover,
+          width:140.0,
+          height: 140.0,
+        ),
       ),
-      radius: 50.0,
     );
   }
 }
